@@ -68,8 +68,10 @@ docs/                  System diagram, wiring notes, design decisions
 ## Open items
 
 - **Load resistor is wrong.** Currently have a 10K signal potentiometer, which draws negligible current at 12V and won't create real braking torque. Need a low-ohm (5-50 ohm) high-wattage rheostat or cement power resistor before the graded-overload fault class (via coupled load motor + resistive braking) can be collected.
+- **ACS712 output voltage may exceed the F401's ADC range.** Not caught in the original hardware list. Most ACS712 breakout boards run their sensor supply off 5V, centering 0A output at ~2.5V with a +-925mV swing at the rated +-5A — the high end (~3.425V) is above the F401's 3.3V VDDA. Confirm the breakout can run its sensor supply off 3.3V, or add a resistor divider / op-amp buffer before wiring OUT to the ADC pin. See `firmware/Drivers/BSP/acs712.h` for detail.
 - Verify shaft coupler torque rating (0.5Nm) against JGB37-520 stall torque before running the load class.
 - Toolchain decision above (Cube AI Studio vs TFLite Micro) not yet made.
+- STM32CubeMX `.ioc` not yet generated — `firmware/Core` peripheral init is all TODO placeholders until that exists.
 
 ## Timeline
 

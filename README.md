@@ -1,4 +1,6 @@
-# STM32 Edge-ML Motor Fault Classifier
+# Real-Time TinyML Motor Fault Classifier
+
+Real-time motor fault classification on an STM32F401RE (96KB RAM) using a quantized int8 CNN over fused vibration and current sensing. Centered on a PTQ vs QAT efficiency study with a measured accuracy-latency-RAM tradeoff frontier, benchmarked against a mandatory rule-based baseline.
 
 On-device predictive maintenance on an STM32F401RE (Nucleo, Cortex-M4, 96KB RAM, 512KB flash). Classifies motor fault conditions in real time from fused vibration (ADXL345, SPI) + current (ACS712, ADC) sensing, using a quantized int8 CNN running fully on-device — no PC in the loop at inference time.
 

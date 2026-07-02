@@ -61,8 +61,8 @@ docs/                  System diagram, wiring notes, design decisions
 
 ## Toolchain decisions (locked)
 
+- Firmware IDE: **STM32CubeIDE** (not PlatformIO) — chosen because STM32Cube AI Studio plugs directly into CubeIDE/CubeMX, no manual integration work.
 - Model deployment runtime: **TBD — pick STM32Cube AI Studio or TFLite Micro, not both.** Not yet decided; decide before step 7.
-- Firmware: STM32CubeIDE / PlatformIO, C, HAL or LL drivers
 - Explicitly excluded: NanoEdge AI Studio (AutoML black-box, indefensible in interviews), any LLM-on-device framing, upgrading off the F401RE
 
 ## Open items
@@ -72,6 +72,9 @@ docs/                  System diagram, wiring notes, design decisions
 - Verify shaft coupler torque rating (0.5Nm) against JGB37-520 stall torque before running the load class.
 - Toolchain decision above (Cube AI Studio vs TFLite Micro) not yet made.
 - STM32CubeMX `.ioc` not yet generated — `firmware/Core` peripheral init is all TODO placeholders until that exists.
+- **FFT config duplicated by hand between C and Python.** `firmware/Drivers/BSP/fft_features.c` (on-device) and `training/data_prep/preprocess.py` (offline) both hardcode the same window size, Hann window, and band edges — there is no shared source of truth. If you change one, change the other, or offline accuracy silently stops matching on-device accuracy.
+- **UART baud rate duplicated by hand.** `firmware/Drivers/BSP/uart_stream.h`'s protocol assumes 115200 baud; `training/data_prep/collect_data.py`'s `BAUD_RATE` must match whatever CubeMX's USART2 config actually uses. Same footgun as above, different pair of files.
+- `training/quantization/ptq.py` and `qat.py` measure accuracy on a PyTorch-side quantized model as a proxy for the tradeoff frontier — the model that actually runs on the F401 is whatever STM32Cube AI Studio produces from the exported ONNX float model in step 7. Don't conflate the two numbers; see the docstrings in those files.
 
 ## Timeline
 

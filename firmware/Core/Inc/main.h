@@ -27,6 +27,15 @@ typedef enum {
 #define SAMPLE_RATE_HZ      800
 #define WINDOW_SIZE_SAMPLES 256
 
+/* Build mode: 1 while collecting training data (streams every raw sample
+ * over UART via UART_SendSample — see uart_stream.h), 0 once a real model
+ * exists on-device and step 8 takes over (streams one label per window via
+ * UART_SendLabel instead). Currently in data-collection mode by default
+ * since no model exists yet. Flip this by hand when step 8 is ready —
+ * there's no runtime auto-detection here on purpose, keeps the firmware
+ * simple and the two modes clearly separate. */
+#define STREAM_RAW_SAMPLES 1
+
 /* TODO(CubeMX): none of the peripheral init below exists yet — this file
  * assumes an .ioc has been generated with:
  *   SPI1  — ADXL345, mode 3 (CPOL=1, CPHA=1), <=5MHz

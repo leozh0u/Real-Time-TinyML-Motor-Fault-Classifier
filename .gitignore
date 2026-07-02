@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# STM32CubeIDE / STM32CubeMX
+firmware/Debug/
+firmware/Release/
+firmware/**/Debug/
+firmware/**/Release/
+*.launch
+.settings/
+.metadata/
+
+# STM32Cube AI Studio generated output (regenerate from ONNX, don't hand-edit)
+firmware/model_c/*
+!firmware/model_c/README.md
+
+# Data (raw/processed can be large; sample/ is committed)
+data/raw/*
+data/processed/*
+!data/raw/README.md
+!data/processed/README.md
+
+# Benchmark artifacts that are regenerated
+benchmarks/results/*.csv
+benchmarks/plots/*.png
+!benchmarks/results/README.md
+!benchmarks/plots/README.md
+
+# OS
+.DS_Store

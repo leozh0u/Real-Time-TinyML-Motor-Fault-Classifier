@@ -76,6 +76,3 @@ docs/                  System diagram, wiring notes, design decisions
 - **UART baud rate duplicated by hand.** `firmware/Drivers/BSP/uart_stream.h`'s protocol assumes 115200 baud; `training/data_prep/collect_data.py`'s `BAUD_RATE` must match whatever CubeMX's USART2 config actually uses. Same footgun as above, different pair of files.
 - `training/quantization/ptq.py` and `qat.py` measure accuracy on a PyTorch-side quantized model as a proxy for the tradeoff frontier — the model that actually runs on the F401 is whatever STM32Cube AI Studio produces from the exported ONNX float model in step 7. Don't conflate the two numbers; see the docstrings in those files.
 
-## Timeline
-
-Realistic full-time compressed floor: ~2.5-3 weeks (16-20 working days). Evenings-only: ~5-6 weeks. Data collection (3-4 days min) and on-device deployment debugging (4-6 days) are the two bottlenecks — don't compress these first.
